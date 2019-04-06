@@ -8,6 +8,8 @@ import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
+import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.CompletionStage;
 
 @Path("/greeting")
 public class GreetingResource {
@@ -18,14 +20,15 @@ public class GreetingResource {
     @GET
     @Produces(MediaType.TEXT_PLAIN)
     @Path("/hello/{name}")
-    public String hello(@PathParam("name") String name) {
+    public CompletionStage<String> hello(@PathParam("name") String name) {
 
         return greetingService.greeting(name);
     }
 
     @GET
     @Produces(MediaType.TEXT_PLAIN)
-    public String greeting() {
-        return "Hello";
+    public CompletionStage<String> greeting() {
+
+        return CompletableFuture.supplyAsync(() -> "Hello");
     }
 }
