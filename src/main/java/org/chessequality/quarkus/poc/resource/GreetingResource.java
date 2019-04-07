@@ -17,16 +17,16 @@ import java.util.concurrent.CompletionStage;
 public class GreetingResource {
 
     @ConfigProperty(name = "greeting.message")
-    private String message;
+    String message;
 
     @ConfigProperty(name = "greeting.suffix", defaultValue="!")
-    private String suffix;
+    String suffix;
 
     @ConfigProperty(name = "greeting.name")
-    private Optional<String> name;
+    Optional<String> name;
 
     @Inject
-    private GreetingService greetingService;
+    GreetingService greetingService;
 
     @GET
     @Produces(MediaType.TEXT_PLAIN)
