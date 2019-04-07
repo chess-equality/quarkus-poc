@@ -7,11 +7,11 @@
 #
 # Then, build the image with:
 #
-# docker build -f src/main/docker/Dockerfile.native -t quarkus/quarkus-poc .
+# docker build -f src/main/docker/Dockerfile.native -t chessequality/quarkus-poc .
 #
 # Then run the container using:
 #
-# docker run -i --rm -p 8080:8080 quarkus/quarkus-poc
+# docker run -i --rm -p 8080:8080 chessequality/quarkus-poc
 #
 ###
 FROM registry.fedoraproject.org/fedora-minimal

@@ -7,11 +7,11 @@
 #
 # Then, build the image with:
 #
-# docker build -f src/main/docker/Dockerfile.jvm -t quarkus/quarkus-poc-jvm .
+# docker build -f src/main/docker/Dockerfile.jvm -t chessequality/quarkus-poc-jvm .
 #
 # Then run the container using:
 #
-# docker run -i --rm -p 8080:8080 quarkus/quarkus-poc-jvm
+# docker run -i --rm -p 8080:8080 chessequality/quarkus-poc-jvm
 #
 ###
 FROM fabric8/java-jboss-openjdk8-jdk
