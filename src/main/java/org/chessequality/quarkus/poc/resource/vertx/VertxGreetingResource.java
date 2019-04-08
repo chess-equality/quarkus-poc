@@ -1,4 +1,4 @@
-package org.chessequality.quarkus.poc.resource;
+package org.chessequality.quarkus.poc.resource.vertx;
 
 // RxJava 2
 import io.vertx.reactivex.core.Vertx;
