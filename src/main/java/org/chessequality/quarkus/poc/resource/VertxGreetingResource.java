@@ -2,6 +2,8 @@ package org.chessequality.quarkus.poc.resource;
 
 // RxJava 2
 import io.vertx.reactivex.core.Vertx;
+
+import org.reactivestreams.Publisher;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -11,17 +13,13 @@ import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
+import java.util.Date;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.CompletionStage;
 
 import static java.util.concurrent.TimeUnit.MILLISECONDS;
 import static java.util.concurrent.TimeUnit.NANOSECONDS;
 
-/**
- * 11:00:46,680 INFO  [VertxGreetingResource] ##### Entering vertx.setTimer...
- * 11:00:46,681 INFO  [VertxGreetingResource] ##### Left vertx.setTimer.
- * 11:00:47,685 INFO  [VertxGreetingResource] >>>>> message = Hello Quarkus! (1003 ms)
- */
 @Path("/vertx/greeting")
 public class VertxGreetingResource {
 
@@ -30,6 +28,11 @@ public class VertxGreetingResource {
     @Inject
     Vertx vertx;
 
+    /**
+     * 11:00:46,680 INFO  [VertxGreetingResource] ##### Entering vertx.setTimer...
+     * 11:00:46,681 INFO  [VertxGreetingResource] ##### Left vertx.setTimer.
+     * 11:00:47,685 INFO  [VertxGreetingResource] >>>>> message = Hello Quarkus! (1003 ms)
+     */
     @GET
     @Produces(MediaType.TEXT_PLAIN)
     @Path("{name}")
@@ -61,5 +64,14 @@ public class VertxGreetingResource {
         LOGGER.info("##### Left vertx.setTimer.");
 
         return future;
+    }
+
+    @GET
+    @Path("{name}/streaming")
+    @Produces(MediaType.SERVER_SENT_EVENTS)
+    public Publisher<String> streamingGreeting(@PathParam("name") String name) {
+
+        return vertx.periodicStream(2000).toFlowable()
+                .map(l -> String.format("Hello %s! (%s)%n", name, new Date()));
     }
 }
