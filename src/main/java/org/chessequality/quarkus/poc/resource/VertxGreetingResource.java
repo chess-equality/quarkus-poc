@@ -3,6 +3,9 @@ package org.chessequality.quarkus.poc.resource;
 // RxJava 2
 import io.vertx.reactivex.core.Vertx;
 
+import io.vertx.core.json.JsonArray;
+import io.vertx.core.json.JsonObject;
+
 import org.reactivestreams.Publisher;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -66,6 +69,12 @@ public class VertxGreetingResource {
         return future;
     }
 
+    /**
+     * See js/streaming.js
+     *
+     * @param name The subject of greeting
+     * @return A stream of greetings
+     */
     @GET
     @Path("{name}/streaming")
     @Produces(MediaType.SERVER_SENT_EVENTS)
@@ -73,5 +82,21 @@ public class VertxGreetingResource {
 
         return vertx.periodicStream(2000).toFlowable()
                 .map(l -> String.format("Hello %s! (%s)%n", name, new Date()));
+    }
+
+    @GET
+    @Path("{name}/object")
+    public JsonObject jsonObject(@PathParam("name") String name) {
+
+        // This works equally well when the JSON result is wrapped in a CompletionStage or a Publisher.
+        return new JsonObject().put("Hello", name);
+    }
+
+    @GET
+    @Path("{name}/array")
+    public JsonArray jsonArray(@PathParam("name") String name) {
+
+        // This works equally well when the JSON result is wrapped in a CompletionStage or a Publisher.
+        return new JsonArray().add("Hello").add(name);
     }
 }
