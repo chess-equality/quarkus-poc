@@ -5,6 +5,6 @@ const onmessage = (event) => {
     var paragraph = document.createElement("p");
     paragraph.innerHTML = event.data;
     container.appendChild(paragraph);
-}
+};
 
 eventSource.onmessage = onmessage;
